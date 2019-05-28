@@ -13,7 +13,7 @@ class WechatArticleUrl:
             self.wechat_official_accounts = ["玉刚说","code小生"]
             self.article_url_list = []
             self.driver = webdriver.Chrome(executable_path='/Users/chejdj/tools/chromedriver')
-            self.account_str = ["zhuyangyang96@163.com","zyy19961027"]
+            self.account_str = ["123","123"]
             self.cookies = {}
             self.token = ''
             self.header = {
