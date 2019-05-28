@@ -15,6 +15,8 @@ SPIDER_MODULES = ['android_bus.spiders']
 NEWSPIDER_MODULE = 'android_bus.spiders'
 MONGO_URI = '127.0.0.1:27017'
 MONGO_DATABASE = 'zhihu_user'
+MONGO_USER="zyy1"
+MONGO_PASS="123"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -69,6 +71,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'android_bus.pipelines.ArticlePipeline': 300,
+    'android_bus.pipelines.WechatArticlePipeline':800,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

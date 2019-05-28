@@ -6,6 +6,9 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from selenium import webdriver
+from scrapy.http.response.html import HtmlResponse
+import time
 
 
 class ExploreSpiderMiddleware(object):
@@ -60,7 +63,7 @@ class ExploreDownloaderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
-
+    driver = webdriver.Chrome(executable_path='/Users/chejdj/tools/chromedriver')
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
@@ -78,6 +81,24 @@ class ExploreDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+        isUsed = request.meta.get("usedSelenium",False)
+        account = request.meta.get("account","no")
+        password = request.meta.get("password","no")
+        if isUsed:
+            self.driver.get('https://mp.weixin.qq.com/')
+            time.sleep(2)
+            # ============登录，获取cookie
+            self.driver.find_element_by_name('account').clear()
+            self.driver.find_element_by_name('account').send_keys(account)
+            self.driver.find_element_by_name('password').clear()
+            self.driver.find_element_by_name('password').send_keys(password)
+            # 在自动输完密码之后记得点一下记住我
+            time.sleep(2)
+            self.driver.find_element_by_xpath("./*//a[@class='btn_login']").click()
+            # 拿手机扫二维码！
+            time.sleep(10)
+            self.driver.get('https://mp.weixin.qq.com/')
+            return HtmlResponse('https://mp.weixin.qq.com/',body=self.driver.page_source,encoding='utf-8',request =request)
         return None
 
     def process_response(self, request, response, spider):

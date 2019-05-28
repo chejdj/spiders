@@ -18,3 +18,8 @@ class ArticleItem(scrapy.Item):
     time = Field()
     author = Field()
     pass
+class WechatArticleItem(scrapy.Item):
+    title = Field()
+    link = Field()
+    pass
+        
