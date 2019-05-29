@@ -10,10 +10,10 @@ import pymongo
 class WechatArticleUrl:
 
         def __init__(self,wechat_official_accounts,username,password):
-            self.wechat_official_accounts = ["玉刚说","code小生"]
+            self.wechat_official_accounts = ["玉刚说","code小生",'郭霖','承香墨影','Android群英传','谷歌开发者','奇卓社','美团技术团队','GcsSloop','互联网侦察','程序亦非猿','Android达摩院']
             self.article_url_list = []
             self.driver = webdriver.Chrome(executable_path='/Users/chejdj/tools/chromedriver')
-            self.account_str = ["123","123"]
+            self.account_str = ["123@163.com","123"]
             self.cookies = {}
             self.token = ''
             self.header = {
@@ -106,7 +106,7 @@ class WechatArticleUrl:
                     print(appmsg_response_json)
                     for msg_list in appmsg_response_json['app_msg_list']:
                         print(msg_list['link'])
-                        self.article_url_list.append(msg_list['link'])
+                        #self.article_url_list.append(msg_list['link'])
                         article = {
                             'link': msg_list['link'],
                             'title': msg_list['title'],
@@ -118,12 +118,12 @@ class WechatArticleUrl:
                     else:
                         count += 10
 
-                print(self.article_url_list)
-                print(len(self.article_url_list))
-                with open('article_url.txt', 'w') as file:
-                    for url in self.article_url_list:
-                        file.write(url)
-                        file.write('\n')
+                #print(self.article_url_list)
+                #print(len(self.article_url_list))
+                #with open('article_url.txt', 'w') as file:
+                #    for url in self.article_url_list:
+                #        file.write(url)
+                #        file.write('\n')
 
 if __name__ == '__main__':
     wechat_official_accounts = ['公众号微信号']
