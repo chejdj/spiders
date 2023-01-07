@@ -68,26 +68,7 @@ class CambridgeSpider(scrapy.Spider):
     host = 'https://dictionary.cambridge.org/dictionary/english-chinese-simplified/'
     index = 0
     length = 500
-    words = _read_words_from_xls_file('todo.xls')
-    complete = _read_words_from_xls_file('test3.xls')
-    noSuccessful = []
-
-    for a in words:
-        find = False
-        for b in complete:
-            if(a.lower() == b.lower()):
-                find = True
-                break
-        if find == False:
-            print('no find  '+ a)
-            noSuccessful.append(a)
-    workbook = xlwt.Workbook(encoding='utf-8')
-    sheet = workbook.add_sheet('cambridge_dictionary_words')
-    index2 = 0
-    for word in noSuccessful:
-        sheet.write(index2, 0, word)
-        index2+=1            
-    workbook.save('todo2.xls')
+    words = _read_words_from_xls_file('todo.xlsx')
     url = host + words[index]
     start_urls = [url]
     cam_dic_words = []
