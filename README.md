@@ -24,7 +24,8 @@
 爬取的是**知乎用户账号信息**  
 ### android_bus  
 爬取的是**安卓巴士网站博客信息**  
-
+### words_grabbing
+爬取剑桥(https://dictionary.cambridge.org/)字典
 
 
 
