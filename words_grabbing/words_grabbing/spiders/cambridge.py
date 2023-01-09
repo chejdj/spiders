@@ -154,7 +154,6 @@ class CambridgeSpider(scrapy.Spider):
             nexturl = self.host + self.words[self.index].lower()
             yield Request(nexturl,meta={"handle_httpstatus_all": True},dont_filter = True)
         else:
-            print('write to xmls have finished index: '+ str(self.index)+ " write_time: "+ str(self.write_time)+ "startCount: "+ str(self.startCount))
             _write_to_xls(self.cam_dic_words, 'test', self.write_time, self.startCount)
             if self.index < len(self.words):
                 self.length = self.length + 500
