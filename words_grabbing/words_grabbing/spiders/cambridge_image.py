@@ -30,22 +30,31 @@ class CambridgeImageSpider(scrapy.Spider):
     name = 'cambridge_image'
     host = 'https://dictionary.cambridge.org/dictionary/english/'
     imageHost = 'https://dictionary.cambridge.org'
-    index = 18414
+    index = 0
     words = _read_words_from_xls_file('todo.xlsx')
     url = host + words[0]
     start_urls = [url]
+    lastImages = ''
+    lastIndex = 0
 
     def parse(self, response):
         soup = BeautifulSoup(response.text, 'lxml')
-        word_pos_sections = soup.findAll('div',attrs={'class','entry-body__el'})
+        word_pos_sections = soup.findAll('div',attrs={'class','pr dsense'})
         for word_sections in word_pos_sections:
             imageUrlSection = word_sections.find('amp-img')
             if imageUrlSection is not None: 
               imageUrl = imageUrlSection['src']
               imageUrl = imageUrl.replace("/thumb/","/full/")
               imageUrl = self.imageHost + imageUrl
-              pos = word_sections.find(attrs={'class': 'posgram'}).text
-              _download_imag(imageUrl, 'images/'+self.words[self.index]+"_"+pos+".jpg")
+              pos = word_sections.find(attrs={'class': 'dsense_pos'}).text
+              imagePath = 'images/'+self.words[self.index]+"_"+pos+".jpg"
+              if(self.lastImages == imagePath):
+                imagePath = 'images/'+self.words[self.index]+"_"+pos+"_"+ str(self.lastIndex)+".jpg"
+                self.lastIndex = self.lastIndex+1
+              else:
+                self.lastImages = imagePath
+                self.lastIndex = 0
+              _download_imag(imageUrl, imagePath)
         self.index = self.index + 1
         newurl = self.host + self.words[self.index].lower()
         print('start index: '+ str(self.index))
